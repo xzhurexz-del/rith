@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fbebf2 0%, #fad4e3 50%, #ffddea 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ---------- floating hearts background (tiny, no background) ---------- */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .float-heart {
+            position: absolute;
+            color: rgba(240, 120, 160, 0.45);
+            font-size: 1.3rem;
+            user-select: none;
+            animation: floatAround 18s infinite ease-in-out;
+            filter: drop-shadow(0 0 4px #ffb0c6);
+        }
+
+        @keyframes floatAround {
+            0% { transform: translateY(110vh) scale(0.5) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { transform: translateY(-15vh) scale(1.4) rotate(18deg); opacity: 0; }
+        }
+        .card {
+            background: rgba(255, 245, 240, 0.3);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 60px 60px 60px 60px;
+            box-shadow: 0 30px 45px -20px #c27797, 0 0 0 2px rgba(255, 220, 235, 0.9) inset;
+            max-width: 700px;
+            width: 100%;
+            padding: 2rem 2rem 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 20;
+            border: 1px solid #ffe5f0;
+        }
+        .penguin-title {
+            font-size: 3.2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            background: linear-gradient(130deg, #1f4a5c, #2e6b7c, #b03e5f, #d96286);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            text-shadow: 0 6px 18px rgba(180, 100, 130, 0.3);
+            letter-spacing: -0.3px;
+            font-family: 'Trebuchet MS', 'Dancing Script', cursive;
+            word-break: break-word;
+        }
+
+        /* interactive area */
+        .interactive-zone {
+            margin: 1.5rem 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .heart-toggle-btn {
+            font-size: 6rem;
+            line-height: 1;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            filter: drop-shadow(0 8px 14px #dd87aa);
+            transition: transform 0.2s ease;
+            animation: heartbeat 2s infinite ease-in-out;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .heart-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .heart-toggle-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.08); }
+            35% { transform: scale(1.02); }
+            45% { transform: scale(1.1); }
+            55% { transform: scale(1.0); }
+            100% { transform: scale(1); }
+        }
+        .hint-text {
+            font-size: 1.1rem;
+            color: #784762;
+            background: transparent;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 160, 190, 0.8);
+            backdrop-filter: blur(2px);
+        }
+        .message-slider {
+            width: 100%;
+            max-width: 580px;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s, margin 0.4s;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
+        }
+
+        .message-slider.closed {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            pointer-events: none;
+        }
+
+        .message-slider.open {
+            max-height: 420px;      /* enough for personal message */
+            opacity: 1;
+            margin: 0.5rem 0 0 0;
+            pointer-events: auto;
+        }
+
+        .letter-content {
+            font-family: 'Dancing Script', 'Georgia', cursive;
+            color: #2f1f28;
+            font-size: 1 rem;      
+            line-height: 1.6;
+            text-align: center;
+            background: transparent;
+            padding: 0.8rem 0.2rem;
+            border: none;
+            box-shadow: none;
+            text-shadow: 0 2px 6px rgba(255, 255, 255, 0.7);
+        }
+
+        .letter-content p {
+            margin: 0.4rem 0;
+            background: transparent;
+        }
+
+        .quote-line {
+            font-size: 1.8 rem;
+            font-weight: 450;
+            color: #aa2d60;
+            background: transparent;
+            padding: 0.1rem 0;
+            border: none;
+            display: inline-block;
+        }
+
+        .signature {
+            font-size: 1.8rem;
+            color: #b34a73;
+            border-top: 2px dotted #d47b9f;
+            padding-top: 0.7rem;
+            margin-top: 0.7rem;
+            background: transparent;
+        }
+
+        .letter-content div, .letter-content span {
+            background: transparent;
+        }
+        .editable-note {
+            font-size: 1.3rem;
+            color: #69435c;
+            background: transparent;
+            border: 1px dashed #f6aec6;
+            padding: 0.5rem;
+            border-radius: 28px;
+            margin-top: 0.6rem;
+        }
+        .penguin-emoji {
+            font-size: 2.8rem;
+            line-height: 1;
+            filter: drop-shadow(0 4px 6px #9bbcdb);
+        }
+
+        /* responsive */
+        @media (max-width: 500px) {
+            .penguin-title { font-size: 2.5rem; }
+            .heart-toggle-btn { font-size: 5rem; }
+            .letter-content { font-size: 1 rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg" id="floatingBg"></div>
+    <div class="card">
+        <div class="penguin-title">
+            happy valentine's day<br>nek khu oun
+        </div>
+        <div class="preview-tag"></div>
+        <div class="interactive-zone">
+            <button class="heart-toggle-btn" id="heartBtn" aria-label="toggle message">❤️</button>
+
+            <div class="hint-text">click ❤️ to open / close</div>
+            <div class="message-slider closed" id="messagePanel">
+                <div class="letter-content">
+                    <div class="quote-line">I love u :p </div>
+                    <p>You’re my favorite person, my greatest blessing, and my forever Valentine. Your heart is so pure, and I admire you more than words can say. Loving you is the best thing that’s ever happened to me, and I’m so lucky to have you</p>
+                  <div class="signature">forever ur </div>
+                </div>
+                <div class="editable-note">I love you everyday Phuong</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const bg = document.getElementById('floatingBg');
+            const hearts = ['❤️', '💗', '💖', '💕', '🩷', ]; 
+            for (let i = 0; i < 30; i++) {
+                const el = document.createElement('div');
+                el.className = 'float-heart';
+                const left = Math.random() * 100;
+                const size = 0.9 + Math.random() * 1.8;
+                const duration = 12 + Math.random() * 18;
+                const delay = Math.random() * 12;
+                const symbol = hearts[Math.floor(Math.random() * hearts.length)];
+                el.textContent = symbol;
+                el.style.left = left + '%';
+                el.style.fontSize = size + 'rem';
+                el.style.animationDuration = duration + 's';
+                el.style.animationDelay = delay + 's';
+                el.style.opacity = 0.3 + Math.random() * 0.3;
+                bg.appendChild(el);
+            }
+            const btn = document.getElementById('heartBtn');
+            const panel = document.getElementById('messagePanel');
+            let isOpen = false;
+            function createBurst(x, y) {
+                for (let i = 0; i < 8; i++) {
+                    const burst = document.createElement('div');
+                    burst.textContent = ['❤️','❤️','💗'][Math.floor(Math.random()*4)];
+                    burst.style.position = 'absolute';
+                    burst.style.left = (x - 15 + Math.random()*30) + 'px';
+                    burst.style.top = (y - 15 + Math.random()*30) + 'px';
+                    burst.style.fontSize = (1.5 + Math.random()*2) + 'rem';
+                    burst.style.pointerEvents = 'none';
+                    burst.style.zIndex = 999;
+                    burst.style.transition = 'all 1s ease-out';
+                    burst.style.opacity = '1';
+                    burst.style.transform = 'scale(0.7)';
+                    burst.style.filter = 'drop-shadow(0 0 8px #ff9eb5)';
+                    document.body.appendChild(burst);
+
+                    const angle = (i / 8) * 2 * Math.PI + Math.random() * 0.7;
+                    const dist = 70 + Math.random() * 100;
+                    const tx = Math.sin(angle) * dist;
+                    const ty = -Math.cos(angle) * dist - 30;
+                    setTimeout(() => {
+                        burst.style.transform = `translate(${tx}px, ${ty}px) scale(1.2)`;
+                        burst.style.opacity = '0';
+                    }, 15);
+
+                    setTimeout(() => burst.remove(), 1200);
+                }
+            }
+
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // toggle panel class
+                if (isOpen) {
+                    panel.classList.remove('open');
+                    panel.classList.add('closed');
+                } else {
+                    panel.classList.remove('closed');
+                    panel.classList.add('open');
+                }
+                const rect = btn.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                createBurst(centerX, centerY);
+
+                isOpen = !isOpen;
+            });
+            panel.classList.add('closed');
+            panel.classList.remove('open');
+            isOpen = false;
+        })();
+    </script>
+</body>
+</html>
